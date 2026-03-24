@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1\System\Users;
 
 use App\Models\V1\System\Users\UsersAccountModel;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
-class RegisterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,14 +29,29 @@ class RegisterRequest extends FormRequest
                 'required',
                 'email:rfc,dns',
                 function ($attribute, $value, $fail) {
+
                     $model_user = UsersAccountModel::where('email', $value)
                         ->exists();
-                    if ($model_user) {
-                        return $fail(ucfirst($attribute) . " is already in exist.");
+                    if (!$model_user) {
+                        return $fail(ucfirst($attribute) . " not found.");
                     }
                 },
             ],
-            'password' => 'required|min:8|confirmed'
+            'password' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $email = request()->email;
+
+                    $model_user = UsersAccountModel::where('email', $email)
+                        ->first();
+
+                    if ($model_user) {
+                        if (!Hash::check($value, $model_user->password)) {
+                            return $fail(ucfirst($attribute) . " invalid password.");
+                        }
+                    }
+                },
+            ],
         ];
     }
 }
