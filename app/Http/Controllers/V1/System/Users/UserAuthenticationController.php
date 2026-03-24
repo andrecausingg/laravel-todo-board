@@ -5,8 +5,8 @@ namespace App\Http\Controllers\V1\System\Users;
 use App\Data\V1\System\Helper\Helper;
 use App\Data\V1\System\Repositories\Users\UserAuthenticationRepository;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\V1\System\Users\LoginRequest;
+use App\Http\Requests\V1\System\Users\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
