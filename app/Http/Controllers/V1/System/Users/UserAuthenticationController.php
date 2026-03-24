@@ -12,6 +12,33 @@ use Illuminate\Support\Facades\Validator;
 
 class UserAuthenticationController extends Controller
 {
+
+    /**
+     * Summary of logoutController
+     * @param Request $request
+     * @return mixed|\Illuminate\Http\JsonResponse
+     */
+    public function logoutController(Request $request)
+    {
+        $helper = app()->make(Helper::class);
+        $repo_user_auth = app()->make(UserAuthenticationRepository::class);
+
+        try {
+            return $repo_user_auth->logoutRepository();
+        } catch (\Exception $e) {
+            $exception_error = [
+                'error_line' => $e->getLine(),
+                'error_message' => $e->getMessage(),
+            ];
+
+            return $helper->httpInternalServerErrorHelper([
+                'class_name' => __CLASS__,
+                'function_name' => __FUNCTION__,
+                'error_list' => $exception_error,
+            ]);
+        }
+    }
+
     /**
      * Login account
      * 

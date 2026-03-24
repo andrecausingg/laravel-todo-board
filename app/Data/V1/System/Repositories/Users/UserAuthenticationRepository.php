@@ -10,6 +10,49 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserAuthenticationRepository extends Controller
 {
+    /**
+     * Summary of logoutRepository
+     * @param mixed $payload
+     * @return mixed|\Illuminate\Http\JsonResponse
+     */
+    public function logoutRepository()
+    {
+        $helper = app()->make(Helper::class);
+
+        try {
+            return $helper->httpOkHelper([
+                'title_message' => 'Success',
+                'message' => 'Successfully logged out.',
+            ])->cookie(
+                'tokenCookie',
+                null,
+                -1,
+                '/',
+                config('env.env_session_domain'),
+                config('env.env_app') != 'local',
+                true,
+                false,
+                null
+            );
+        } catch (\Exception $e) {
+            $exception_error = [
+                'error_line' => $e->getLine(),
+                'error_message' => $e->getMessage(),
+            ];
+
+            return $helper->httpInternalServerErrorHelper([
+                'class_name' => __CLASS__,
+                'function_name' => __FUNCTION__,
+                'error_list' => $exception_error,
+            ]);
+        }
+    }
+
+    /**
+     * Summary of loginRepository
+     * @param mixed $payload
+     * @return mixed|\Illuminate\Http\JsonResponse
+     */
     public function loginRepository($payload = [])
     {
         $helper = app()->make(Helper::class);
@@ -60,6 +103,11 @@ class UserAuthenticationRepository extends Controller
         }
     }
 
+    /**
+     * Summary of registerRepository
+     * @param mixed $payload
+     * @return mixed|\Illuminate\Http\JsonResponse
+     */
     public function registerRepository($payload = [])
     {
         $helper = app()->make(Helper::class);
