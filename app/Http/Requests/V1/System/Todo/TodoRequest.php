@@ -28,6 +28,7 @@ class TodoRequest extends FormRequest
             'title' => 'required|string|max:255',
             'status' => 'required|string|in:todo,in_progress,done',
             'description' => 'nullable|string',
+            'expired_at' => 'nullable|date'
         ];
 
         return array_map(
