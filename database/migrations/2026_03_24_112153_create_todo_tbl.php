@@ -19,7 +19,7 @@ return new class extends Migration
             $table->uuid('created_by_uuid_user_id')->nullable();
 
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->enum('status', ['todo', 'in_progress', 'done']);
 
             $table->timestamp('expired_at')->nullable();
