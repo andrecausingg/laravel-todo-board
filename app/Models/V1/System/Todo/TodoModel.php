@@ -61,4 +61,11 @@ class TodoModel extends Model
             }
         });
     }
+
+    public function getExpiredAtAttribute($value): ?string
+    {
+        if ($value === null) return null;
+
+        return \Carbon\Carbon::parse($value)->format('M d, Y');
+    }
 }
