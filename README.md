@@ -81,3 +81,6 @@ docker exec -it board-todo-api php artisan migrate
 ### Clear config, cache, compiled, events, routes, views
 
 docker exec -it board-todo-api php artisan optimize:clear
+
+### Having trouble setting it up? You can check it on the live server.
+https://todo-board.andrecausing.com/
