@@ -36,7 +36,7 @@ class TodoModel extends Model
         'updated_at'         => 'datetime',
         'deleted_at'         => 'datetime',
 
-        'expired_at'  => 'datetime',
+        'expired_at' => 'date:Y-m-d',
     ];
 
     protected $hidden = [
@@ -60,12 +60,5 @@ class TodoModel extends Model
                 $model->uuid_todo_id = $uuid;
             }
         });
-    }
-
-    public function getExpiredAtAttribute($value): ?string
-    {
-        if ($value === null) return null;
-
-        return \Carbon\Carbon::parse($value)->format('M d, Y');
     }
 }
