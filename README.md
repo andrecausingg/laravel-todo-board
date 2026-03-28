@@ -1,15 +1,4 @@
-# Todo Board API
-
-A robust, containerized Todo Management API built with **Laravel 12**, featuring **JWT Authentication** and a fully **Dockerized**
-
-# Tech Stack
-* **Backend:** Laravel 12.55.1 (PHP 8.2)  
-* **Database:** MySQL 9.6.0
-* **Auth:** JWT (JSON Web Tokens)  
-* **Web Server:** Nginx (Alpine)  
-* **Tools:** Docker Desktop, phpMyAdmin  
-
-### Clone repository and setup .env
+### Clone repository
 git clone https://github.com/andrecausingg/laravel-todo-board.git
 
 ### Change path
