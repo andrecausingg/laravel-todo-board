@@ -1,0 +1,77 @@
+services:
+  laravel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: board-todo-api
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+      - ./storage/app/public:/var/www/storage/app/public
+    networks:
+      - board-todo-net
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: board-todo-nginx
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - ./public:/var/www/public
+      - ./storage/app/public:/var/www/public/storage
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - board-todo-net
+    depends_on:
+      - laravel
+    restart: unless-stopped
+
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: board-todo-queue
+    working_dir: /var/www
+    command: php artisan queue:work --sleep=3 --tries=3 --timeout=90
+    volumes:
+      - .:/var/www
+    networks:
+      - board-todo-net
+    restart: unless-stopped
+    depends_on:
+      - laravel
+
+  mysql:
+    image: mysql:latest
+    container_name: ${DB_HOST}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    ports:
+      - "${DB_FORWARD_PORT}:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - board-todo-net
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: board-todo-phpmyadmin
+    environment:
+      PMA_HOST: ${DB_HOST}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${PMA_PORT}:80"
+    networks:
+      - board-todo-net
+    depends_on:
+      - mysql
+
+networks:
+  board-todo-net:
+    driver: bridge
+
+volumes:
+  mysql-data:
