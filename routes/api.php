@@ -12,7 +12,6 @@ Route::prefix('v1')->group(function () {
         Route::prefix('todo')->group(function () {
             Route::get('/', [TodoController::class, 'indexTodoController']);
             Route::post('/', [TodoController::class, 'storeTodoController']);
-            Route::get('/{id}', [TodoController::class, 'showTodoController']);
             Route::match(['put', 'patch'], '/{id}', [TodoController::class, 'updateTodoController']);
             Route::delete('/{id}', [TodoController::class, 'destroyTodoController']);
         });
