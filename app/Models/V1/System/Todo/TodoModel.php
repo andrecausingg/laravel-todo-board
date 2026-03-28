@@ -42,8 +42,6 @@ class TodoModel extends Model
     protected $hidden = [
         'created_by_number_user_id',
         'created_by_uuid_user_id',
-        'created_at',
-        'updated_at',
         'deleted_at',
     ];
 

@@ -25,6 +25,7 @@ class TodoRepository extends Controller
                     $payload = $item->toArray();
 
                     $helper->modifiedKeyValue($arr_keys_encrypt, $payload);
+                    $helper->appendUpdatedAtIfChangesDetect($payload);
 
                     $final_data[] = $payload;
                 }

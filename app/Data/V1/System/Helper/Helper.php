@@ -10,6 +10,23 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 class Helper
 {
+
+    /**
+     * Summary of appendUpdatedAtIfChangesDetect
+     * @param mixed $payload
+     * @return void
+     */
+    public function appendUpdatedAtIfChangesDetect(&$payload)
+    {
+        if (!empty($payload['created_at']) && !empty($payload['updated_at'])) {
+            if ($payload['created_at'] == $payload['updated_at']) {
+                unset($payload['created_at'], $payload['updated_at']);
+            } else {
+                unset($payload['created_at']);
+            }
+        }
+    }
+
     /**
      * Summary of isEncryptedHelper
      * @param mixed $value
