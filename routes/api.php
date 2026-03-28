@@ -15,17 +15,17 @@ Route::prefix('v1')->group(function () {
             Route::get('/{id}', [TodoController::class, 'showTodoController']);
             Route::match(['put', 'patch'], '/{id}', [TodoController::class, 'updateTodoController']);
             Route::delete('/{id}', [TodoController::class, 'destroyTodoController']);
-
-            Route::get('/test-api', function () {
-                return response()->json([
-                    'message' => 'API is working.'
-                ]);
-            });
         });
 
         // Settings routes
         Route::prefix('settings')->group(function () {
             Route::get('logout', [UserAuthenticationController::class, 'logoutController']);
         });
+    });
+
+    Route::get('/test-api', function () {
+        return response()->json([
+            'message' => 'API is working.'
+        ]);
     });
 });
