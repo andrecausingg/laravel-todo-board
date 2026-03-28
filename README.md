@@ -6,6 +6,14 @@ git clone https://github.com/andrecausingg/laravel-todo-board.git
 
 cd laravel-todo-board
 
+### Fetch branch
+
+git fetch
+
+### Checkout branch
+
+git checkout release
+
 ### Copy .env.example to .env
 
 cp .env.example .env
