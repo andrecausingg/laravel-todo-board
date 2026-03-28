@@ -18,21 +18,22 @@ class TodoRepository extends Controller
         ];
 
         try {
-            $model_result = TodoModel::all();
+            $auth_user = request()->input('auth_user');
+            $uuid_user_id = $auth_user->uuid_user_id;
 
-            if ($model_result->isNotEmpty()) {
-                foreach ($model_result as $item) {
-                    $payload = $item->toArray();
+            $todos = TodoModel::where('created_by_uuid_user_id', $uuid_user_id)->get();
 
+            if ($todos->isNotEmpty()) {
+                foreach ($todos as $todo) {
+                    $payload = $todo->toArray();
                     $helper->modifiedKeyValue($arr_keys_encrypt, $payload);
-
                     $final_data[] = $payload;
                 }
             }
 
             return $helper->httpOkHelper([
                 'title_message' => 'Success',
-                'message' => 'Successfully retrieved todo.',
+                'message' => 'Successfully retrieved todos.',
                 'data' => $final_data,
             ]);
         } catch (\Exception $e) {
