@@ -30,7 +30,7 @@ DB_HOST=board-todo-mysql
 
 DB_PASSWORD=passBoardTodo
 
-### Database | Add variable in .env
+### Database Forward port | Add variable in .env
 
 DB_FORWARD_PORT=3307
 
